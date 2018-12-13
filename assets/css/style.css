@@ -21,7 +21,6 @@ img {
 
 header {
     height: 20vh;
-    width: 100vw;
     background-color: black;
 }
 
@@ -52,7 +51,6 @@ footer {
     background-color: black;
     position: absolute;
     bottom: 0;
-    width: 100vw;
 }
 
 .subtitle {
