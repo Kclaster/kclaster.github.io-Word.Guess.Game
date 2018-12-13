@@ -22,13 +22,27 @@ img {
 header {
     height: 20vh;
     background-color: black;
+    width: 100vw;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Open Sans Condensed', Arial, Helvetica, sans-serif;
 }
 
 p,
 a,
 h1,
 h2,
-h3 { 
+h3,
+ul { 
     margin-left: 35vw;
     color: #ffffff;
     text-decoration: none;
@@ -51,6 +65,7 @@ footer {
     background-color: black;
     position: absolute;
     bottom: 0;
+    width: 100vw;
 }
 
 .subtitle {
