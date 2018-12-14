@@ -1,92 +1,91 @@
 
-//Declare and Define global counters
-var count, wordChoice, randomWord, guessLeft, cycle, guessedLetters, wins, losses;
-cycle = 0;
-wins = 0;
-losses = 0;
 
-//Function for start of a New Game
-var initialSetup = function() {
-    count = [];
-    wordChoice = ['Narnia', 'Hogwarts', 'Westeros', 'Redwall', 'Hyrule', 'Middle Earth'];
-    randomWord = wordChoice[Math.floor(Math.random()*wordChoice.length)];
-    guessLeft = randomWord.length;
-    guessedLetters = [];
-    console.log(randomWord);
-    for (i = 0; i < randomWord.length; i++) {
-        count.push('-');   
+var wordGuessGame = {
+    cycle: 0,
+    wins:0,
+    losses:0,
+    count:[],
+    wordChoice: '',
+    RandomWord: '',
+    guessLeft: 0,
+    guessedLetters: [],
+    initialSetup: function() {
+        this.count = [],
+        this.wordChoice = ['Narnia', 'Hogwarts', 'Westeros', 'Redwall', 'Hyrule', 'Middle Earth'];
+        this.randomWord = this.wordChoice[Math.floor(Math.random()*this.wordChoice.length)];
+        this.guessLeft = this.randomWord.length;
+        this.guessedLetters = [];
+        console.log(this.randomWord);
+        for (i = 0; i < this.randomWord.length; i++) {
+            this.count.push('-');   
+        }
+        return this.count;
+    },
+    guessIncluded: function(guess) {
+        if(this.randomWord.includes(guess)) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    correctGuess: function(guess, count) {
+        var i = 0;
+        for (i = 0; i < this.randomWord.length; i++) {
+            if (this.randomWord[i] == guess) {
+                count.splice(i,1,guess);
+            }
+        }
+        return count;
     }
-    return count;
-}
-
-//Boolian function stating if user guessed correctly
-var guessIncluded = function(guess) {
-    if (randomWord.includes(guess)) {
-        return true;
-    } else {
-        return false;
-    } 
-}
-
-//Update UI to display correct guess
-var correctGuess = function(guess, count) {
-    for (i = 0; i < randomWord.length; i++) {
-        if (randomWord[i] == guess) {
-            count.splice(i, 1, guess);
-        }  
-    }
-    return count;
-}
+    };
 
 //Function for All during game items
-document.onkeyup = function (event) {
+window.addEventListener('keypress', function (event) {
     var userchoice = event.key;
 
     //Correct Initial Display
-    cycle ++
-    if (cycle <= 1) {
-    initialSetup();
-    stringInit = count.join('');
+    wordGuessGame.cycle ++
+    if (wordGuessGame.cycle <= 1) {
+    wordGuessGame.initialSetup();
+    stringInit = wordGuessGame.count.join('');
     document.getElementById("hyphens").innerHTML = stringInit;
-    document.getElementById("guess-counter").innerHTML = guessLeft;
+    document.getElementById("guess-counter").innerHTML = wordGuessGame.guessLeft;
     document.getElementById("changeMe").textContent = "Current Word";
-    document.getElementById("guessedLetters").innerHTML = guessedLetters;
+    document.getElementById("guessedLetters").innerHTML = wordGuessGame.guessedLetters;
 
     //Update UI on Guess
     } else {
-        guessedLetters.push(" " + userchoice + " ");
-        document.getElementById("guessedLetters").innerHTML = guessedLetters;
+        wordGuessGame.guessedLetters.push(" " + userchoice + " ");
+        document.getElementById("guessedLetters").innerHTML = wordGuessGame.guessedLetters;
         //Correct Guess
-        if (guessIncluded(userchoice)){
-            correctGuess(userchoice, count);
-            stringInit = count.join('');
+        if (wordGuessGame.guessIncluded(userchoice)){
+            wordGuessGame.correctGuess(userchoice, wordGuessGame.count);
+            stringInit = wordGuessGame.count.join('');
             document.getElementById("hyphens").innerHTML = stringInit;
             //If Player Wins
-            if (!count.includes('-')) {
-                initialSetup();
-                cycle = 0;
-                wins++
-                document.getElementById("wins").innerHTML = wins;
+            if (!wordGuessGame.count.includes('-')) {
+                wordGuessGame.cycle = 0;
+                wordGuessGame.wins++
+                document.getElementById("wins").innerHTML = wordGuessGame.wins;
 
             }
         //Incorrect Guess
         } else {
-            guessLeft--
-            document.getElementById("guess-counter").innerHTML = guessLeft;
+            wordGuessGame.guessLeft--
+            document.getElementById("guess-counter").innerHTML = wordGuessGame.guessLeft;
             //If Player Looses
-            if (guessLeft === 0) {
-                initialSetup();
-                cycle = 0;
-                losses++;
-                document.getElementById("losses").innerHTML = losses;
+            if (wordGuessGame.guessLeft === 0) {
+                wordGuessGame.cycle = 0;
+                wordGuessGame.losses++;
+                document.getElementById("losses").innerHTML = wordGuessGame.losses;
             }
         }
     }
-    return [guessLeft, count]
+    return [wordGuessGame.guessLeft, wordGuessGame.count]
 }
 
 
-
+)
 
 
 

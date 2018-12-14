@@ -8,6 +8,6 @@ document.onkeyup = function (event) {
     };
    
 
-    document.getElementById("named-champion").innerHTML = userchoice;
+    document.getElementById("named-champion").innerHTML = '1. ' + userchoice;
 
 };
